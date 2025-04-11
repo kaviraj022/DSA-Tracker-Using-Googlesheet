@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>My DSA Tracker</h1>
+
+  <div class="top-controls">
+    <input id="topicInput" type="text" placeholder="Enter topic name" />
+    <button onclick="addTopic()">Add Topic</button>
+    <input type="text" id="searchInput" placeholder="Search..." oninput="searchTopics()" />
+    <label class="switch">
+      <input type="checkbox" onchange="toggleDarkMode()">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
+  <div id="topicsContainer"></div>
+
+  <div id="notePopup" class="note-popup hidden">
+    <textarea id="noteContent"></textarea>
+    <div class="popup-actions">
+      <button onclick="saveNote()">Save</button>
+      <button onclick="closeNote()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
