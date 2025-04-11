@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DSA Tracker</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <h1>My DSA Tracker</h1>
-
   <div class="top-controls">
-    <input id="topicInput" type="text" placeholder="Enter topic name" />
-    <button onclick="addTopic()">Add Topic</button>
-    <input type="text" id="searchInput" placeholder="Search..." oninput="searchTopics()" />
-    <label class="switch">
-      <input type="checkbox" onchange="toggleDarkMode()">
-      <span class="slider round"></span>
-    </label>
+    <input type="text" id="searchInput" placeholder="Search problems..." oninput="updateSearchSuggestions()" />
+    <div id="searchSuggestions" class="suggestions hidden"></div>
+    <button id="themeToggle" onclick="toggleDarkMode()"><span id="themeIcon">🌙</span></button>
   </div>
 
   <div id="topicsContainer"></div>
 
-  <div id="notePopup" class="note-popup hidden">
-    <textarea id="noteContent"></textarea>
-    <div class="popup-actions">
-      <button onclick="saveNote()">Save</button>
-      <button onclick="closeNote()">Close</button>
-    </div>
+  <button id="addButton" onclick="showAddForm()">＋</button>
+
+  <div id="addForm" class="popup hidden">
+    <h3>Add Problem</h3>
+    <select id="topicSelect">
+      <option value="">-- Select Topic --</option>
+    </select>
+    <input type="text" id="newTopicInput" placeholder="Or enter new topic name" />
+    <select id="difficultySelect">
+      <option value="">-- Select Difficulty --</option>
+      <option>Easy</option>
+      <option>Medium</option>
+      <option>Hard</option> 
+    </select>
+    <input id="problemName" placeholder="Problem Name" />
+    <input id="ytLink" placeholder="YouTube Link" />
+    <input id="practiceLink" placeholder="Practice Link" />
+    <input id="notesInput" placeholder="Notes (optional)" />
+    <button onclick="addProblem()">Add</button>
+    <button onclick="closeAddForm()">Cancel</button>
   </div>
 
   <script src="script.js"></script>
