@@ -20,23 +20,28 @@
 
   <div id="addForm" class="popup hidden">
     <h3>Add Problem</h3>
-    <select id="topicSelect">
-      <option value="">-- Select Topic --</option>
-    </select>
-    <input type="text" id="newTopicInput" placeholder="Or enter new topic name" />
-    <select id="difficultySelect">
-      <option value="">-- Select Difficulty --</option>
-      <option>Easy</option>
-      <option>Medium</option>
-      <option>Hard</option> 
-    </select>
-    <input id="problemName" placeholder="Problem Name" />
-    <input id="ytLink" placeholder="YouTube Link" />
-    <input id="practiceLink" placeholder="Practice Link" />
-    <input id="notesInput" placeholder="Notes (optional)" />
-    <button onclick="addProblem()">Add</button>
-    <button onclick="closeAddForm()">Cancel</button>
+    <div class="popup-content">
+      <select id="topicSelect">
+        <option value="">-- Select Topic --</option>
+      </select>
+      <input type="text" id="newTopicInput" placeholder="Or enter new topic name" />
+      <select id="difficultySelect">
+        <option value="">-- Select Difficulty --</option>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option> 
+      </select>
+      <input id="problemName" placeholder="Problem Name" />
+      <input id="ytLink" placeholder="YouTube Link" />
+      <input id="practiceLink" placeholder="Practice Link" />
+      <input id="notesInput" placeholder="Notes (optional)" />
+    </div>
+    <div class="popup-buttons">
+      <button class="add" onclick="addProblem()">Add</button>
+      <button class="cancel" onclick="closeAddForm()">Cancel</button>
+    </div>
   </div>
+  
 
   <script src="script.js"></script>
 </body>

@@ -29,47 +29,35 @@ body.dark h1 {
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 480px;
-  max-height: 80vh;
-  overflow-y: auto;
+  height: 80vh;
   background: white;
   padding: 25px 30px;
   border-radius: 12px;
   z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 14px;
   border: 1px solid #ccc;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-/* Inputs and selects */
-.popup input,
-.popup select {
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #bbb;
-  width: 100%;
-  box-sizing: border-box;
-  transition: border 0.2s ease;
+.popup form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.popup input:focus,
-.popup select:focus {
-  outline: none;
-  border-color: #3f51b5;
-}
-
-/* Buttons layout */
 .popup .popup-buttons {
   display: flex;
   justify-content: space-between;
   gap: 12px;
+  margin-top: auto;
 }
 
-/* Buttons */
-.popup button {
+.popup .popup-buttons button {
   flex: 1;
   padding: 12px;
   font-size: 1rem;
@@ -79,42 +67,14 @@ body.dark h1 {
   transition: background-color 0.2s ease;
 }
 
-/* Add button - using topic color */
-.popup button.add {
-  background-color: #3f51b5;
+.popup .popup-buttons .add {
+  background-color: #4caf50;
   color: white;
 }
 
-/* Cancel button - slightly muted red for cancel */
-.popup button.cancel {
-  background-color: #d32f2f;
+.popup .popup-buttons .cancel {
+  background-color: #e53935;
   color: white;
-}
-
-.popup button:hover {
-  opacity: 0.9;
-}
-
-.popup::-webkit-scrollbar {
-  display: none;
-}
-
-/* Dark mode consistency */
-body.dark .popup {
-  background: #1e1e1e;
-  color: white;
-}
-
-body.dark .popup input,
-body.dark .popup select {
-  background: #2c2c2c;
-  color: white;
-  border: 1px solid #444;
-}
-
-body.dark .popup input:focus,
-body.dark .popup select:focus {
-  border-color: #7986cb;
 }
 
 
@@ -272,29 +232,30 @@ a {
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 480px;
-  max-height: 80vh;
-  overflow-y: auto;
+  height: 80vh;
   background: white;
   padding: 25px 30px;
   border-radius: 12px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 14px;
   border: 1px solid #ccc;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .note-popup textarea {
+  flex: 1;
   padding: 12px;
+  margin-bottom: 10px;
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #bbb;
   width: 100%;
-  min-height: 200px;
   box-sizing: border-box;
-  resize: vertical;
+  resize: none;
+  overflow-y: auto;
 }
 
 .note-buttons {
@@ -305,7 +266,7 @@ a {
 
 .note-buttons button {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   font-size: 1rem;
   cursor: pointer;
   border: none;
