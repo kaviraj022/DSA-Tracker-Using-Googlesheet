@@ -149,7 +149,7 @@ function renderProblems(data) {
           <span>${p.name}</span>
           <a href="${p.yt}" target="_blank" class="icon" title="YouTube">🎥</a>
           <a href="${p.pr}" target="_blank" class="icon" title="Practice">💻</a>
-          <span title="${p.notes || ""}" class="icon">📝</span>
+          <span class="icon note-icon" data-note="${p.notes || ""}" title="Click to view/edit note">📝</span>
         `;
         diffContent.appendChild(problem);
       });
@@ -162,6 +162,71 @@ function renderProblems(data) {
     container.appendChild(topicDiv);
   });
 }
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("note-icon")) {
+    document.querySelectorAll(".note-popup")?.forEach(popup => popup.remove()); // close any open
+
+    const existingNote = e.target.dataset.note || "";
+    const problemDiv = e.target.closest(".problem");
+    const name = problemDiv.querySelector("span:nth-child(2)").textContent;
+    const topic = problemDiv.closest(".topic").querySelector(".collapsible span:nth-child(2)").textContent;
+    const difficulty = problemDiv.closest(".difficulty").dataset.diff;
+
+    const noteBox = document.createElement("div");
+    noteBox.className = "note-popup";
+
+    noteBox.innerHTML = `
+      <textarea placeholder="Write your note here...">${existingNote}</textarea>
+      <div class="note-buttons">
+        <button class="save-note">Save</button>
+        <button class="close-note">Cancel</button>
+      </div>
+    `;
+
+    document.body.appendChild(noteBox);
+
+    noteBox.querySelector(".close-note").onclick = () => noteBox.remove();
+
+    noteBox.querySelector(".save-note").onclick = () => {
+      const newNote = noteBox.querySelector("textarea").value;
+      const secret = prompt("🔐 Enter secret code to update note:");
+      if (!secret) {
+        alert("⛔ Cancelled.");
+        return;
+      }
+
+      const baseUrl = "https://script.google.com/macros/s/AKfycbxu0ISABkZFX5AIJyXDWyrmhopKBGjy7TCzADGIBO6cStPRbG7PAT48Iob7IudGSfZIgQ/exec";
+      const params = new URLSearchParams({
+        mode: "updateNote",
+        secret,
+        topic,
+        difficulty,
+        name,
+        notes: newNote
+      });
+
+      fetch(`${baseUrl}?${params.toString()}`)
+        .then(res => res.text())
+        .then(msg => {
+          if (msg.trim() === "Updated") {
+            alert("✅ Note updated!");
+            e.target.dataset.note = newNote;
+            fetchAndRenderProblems();
+            noteBox.remove();
+          } else if (msg.trim() === "Unauthorized") {
+            alert("🔐 Wrong secret. Note not saved.");
+          } else {
+            alert("❌ Error: " + msg);
+          }
+        })
+        .catch(err => {
+          alert("❌ Network error: " + err.message);
+        });
+    };
+  }
+});
+
 
 function toggleCollapse(contentDiv, icon) {
   const isOpen = contentDiv.style.display !== "none";
@@ -182,12 +247,30 @@ function updateSearchSuggestions() {
   matches.forEach(({ text, el }) => {
     const div = document.createElement("div");
     div.textContent = text;
-    div.onclick = () => {
+
+    div.onmousedown = (e) => {
+      e.preventDefault();
+
+      let topicContent = el.closest(".topic").querySelector("div:nth-child(2)");
+      if (topicContent.style.display === "none") {
+        topicContent.style.display = "block";
+        const topicIcon = el.closest(".topic").querySelector(".collapsible .icon");
+        if (topicIcon) topicIcon.textContent = "▼";
+      }
+
+      let diffContent = el.closest(".diff-content");
+      if (diffContent && diffContent.style.display === "none") {
+        diffContent.style.display = "block";
+        const diffIcon = diffContent.parentElement.querySelector(".collapsible .icon");
+        if (diffIcon) diffIcon.textContent = "▼";
+      }
+
       el.scrollIntoView({ behavior: "smooth", block: "center" });
       el.style.outline = "2px solid orange";
       setTimeout(() => (el.style.outline = ""), 1500);
       suggestions.classList.add("hidden");
     };
+
     suggestions.appendChild(div);
   });
 
