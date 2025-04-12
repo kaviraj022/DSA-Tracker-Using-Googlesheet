@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DSA Tracker</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <h1>SDE Sheet</h1>
+
   <div class="top-controls">
     <input type="text" id="searchInput" placeholder="Search problems..." oninput="updateSearchSuggestions()" />
     <div id="searchSuggestions" class="suggestions hidden"></div>
-    <button id="themeToggle" onclick="toggleDarkMode()"><span id="themeIcon">🌙</span></button>
+    <button id="themeToggle" onclick="toggleDarkMode()">
+      <span id="themeIcon">🌙</span>
+    </button>
   </div>
 
   <div id="topicsContainer"></div>
@@ -21,27 +24,25 @@
   <div id="addForm" class="popup hidden">
     <h3>Add Problem</h3>
     <div class="popup-content">
-      <select id="topicSelect">
-        <option value="">-- Select Topic --</option>
-      </select>
-      <input type="text" id="newTopicInput" placeholder="Or enter new topic name" />
-      <select id="difficultySelect">
-        <option value="">-- Select Difficulty --</option>
-        <option>Easy</option>
-        <option>Medium</option>
-        <option>Hard</option> 
-      </select>
+      <input list="topicList" id="topicInput" placeholder="Select or type topic" />
+      <datalist id="topicList">
+        <!-- Populated via JS -->
+      </datalist>
+      <input list="difficultyList" id="difficultyInput" placeholder="Select or type difficulty" />
+      <datalist id="difficultyList">
+        <!-- Populated via JS -->
+      </datalist>
       <input id="problemName" placeholder="Problem Name" />
       <input id="ytLink" placeholder="YouTube Link" />
       <input id="practiceLink" placeholder="Practice Link" />
       <input id="notesInput" placeholder="Notes (optional)" />
     </div>
+
     <div class="popup-buttons">
       <button class="add" onclick="addProblem()">Add</button>
       <button class="cancel" onclick="closeAddForm()">Cancel</button>
     </div>
   </div>
-  
 
   <script src="script.js"></script>
 </body>

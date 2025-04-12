@@ -6,28 +6,49 @@ function toggleDarkMode() {
 
 function showAddForm() {
   document.getElementById("addForm").classList.remove("hidden");
-  const topicSelect = document.getElementById("topicSelect");
-  topicSelect.innerHTML = '<option value="">-- Select Topic --</option>';
 
+  const topicList = document.getElementById("topicList");
+  topicList.innerHTML = "";
+
+  // Populating topic list from existing topics in the DOM
   document.querySelectorAll(".topic .collapsible span:nth-child(2)").forEach((t) => {
     const opt = document.createElement("option");
     opt.value = t.textContent;
-    opt.textContent = t.textContent;
-    topicSelect.appendChild(opt);
+    topicList.appendChild(opt);
+  });
+
+  // Fetch available difficulties dynamically from the rendered problems
+  const difficultyList = document.getElementById("difficultyList");
+  difficultyList.innerHTML = "";
+
+  // Collect all unique difficulties
+  const difficulties = new Set();
+  document.querySelectorAll(".difficulty").forEach((difficultyDiv) => {
+    const difficulty = difficultyDiv.dataset.diff;
+    difficulties.add(difficulty);
+  });
+
+  // Add difficulties to the dropdown
+  difficulties.forEach((difficulty) => {
+    const opt = document.createElement("option");
+    opt.value = difficulty;
+    difficultyList.appendChild(opt);
   });
 }
+
+
 
 function closeAddForm() {
   document.getElementById("addForm").classList.add("hidden");
 }
 
 function addProblem() {
-  const topicName = document.getElementById("newTopicInput").value || document.getElementById("topicSelect").value;
-  const difficulty = document.getElementById("difficultySelect").value;
-  const name = document.getElementById("problemName").value;
-  const yt = document.getElementById("ytLink").value;
-  const pr = document.getElementById("practiceLink").value;
-  const notes = document.getElementById("notesInput").value;
+  const topicName = document.getElementById("topicInput").value;
+  const difficulty = document.getElementById("difficultyInput").value;
+  const name = document.getElementById("problemName").value.trim();
+  const yt = document.getElementById("ytLink").value.trim();
+  const pr = document.getElementById("practiceLink").value.trim();
+  const notes = document.getElementById("notesInput").value.trim();
 
   if (!topicName || !difficulty || !name) {
     alert("⚠️ Please fill in all required fields.");
@@ -53,7 +74,6 @@ function addProblem() {
     .then(res => res.text())
     .then(msg => {
       const trimmed = msg.trim();
-      console.log("Sheet response:", trimmed);
       if (trimmed === "Added") {
         alert("✅ Problem added to sheet!");
         fetchAndRenderProblems();
@@ -98,12 +118,14 @@ function renderProblems(data) {
 
   const topicsMap = {};
 
+  // Organizing data by topic and difficulty
   data.forEach(({ topic, difficulty, name, yt, pr, notes }) => {
     if (!topicsMap[topic]) topicsMap[topic] = {};
     if (!topicsMap[topic][difficulty]) topicsMap[topic][difficulty] = [];
     topicsMap[topic][difficulty].push({ name, yt, pr, notes });
   });
 
+  // Render topics
   Object.entries(topicsMap).forEach(([topic, difficulties]) => {
     const topicDiv = document.createElement("div");
     topicDiv.className = "topic";
@@ -119,13 +141,14 @@ function renderProblems(data) {
     topicDiv.appendChild(topicHeader);
     topicDiv.appendChild(topicContent);
 
-    ["Easy", "Medium", "Hard"].forEach((diff) => {
-      const problems = difficulties[diff];
+    // Render each difficulty dynamically
+    Object.keys(difficulties).forEach((difficulty) => {
+      const problems = difficulties[difficulty];
       if (!problems) return;
 
       const diffDiv = document.createElement("div");
       diffDiv.className = "difficulty";
-      diffDiv.dataset.diff = diff;
+      diffDiv.dataset.diff = difficulty;
 
       const diffHeader = document.createElement("div");
       diffHeader.className = "collapsible";
@@ -133,7 +156,7 @@ function renderProblems(data) {
       diffIcon.className = "icon";
       diffIcon.textContent = "▶";
       diffHeader.appendChild(diffIcon);
-      diffHeader.appendChild(document.createTextNode(diff));
+      diffHeader.appendChild(document.createTextNode(difficulty));
 
       const diffContent = document.createElement("div");
       diffContent.className = "diff-content";
@@ -162,6 +185,7 @@ function renderProblems(data) {
     container.appendChild(topicDiv);
   });
 }
+
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("note-icon")) {
