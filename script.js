@@ -29,7 +29,7 @@ function addProblem() {
   const pr = document.getElementById("practiceLink").value;
   const notes = document.getElementById("notesInput").value;
 
-  if (!topicName || !difficulty || !name || !yt || !pr) {
+  if (!topicName || !difficulty || !name) {
     alert("⚠️ Please fill in all required fields.");
     return;
   }
