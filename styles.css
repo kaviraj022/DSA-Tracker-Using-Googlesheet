@@ -39,15 +39,38 @@ body.dark h1 {
   border: 1px solid #ccc;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease;
-  overflow: hidden;
+  overflow: hidden; /* Don't scroll the outer popup */
 }
 
-.popup form {
+.popup-content {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  flex: 1;
-  overflow-y: auto;
+  margin-bottom: 10px;
+
+  /* Hide scrollbar in all browsers */
+  scrollbar-width:thin;           /* Firefox */
+  -ms-overflow-style:thin;        /* IE/Edge */
+}
+
+.popup input,
+.popup select {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.popup input:focus,
+.popup select:focus {
+  outline: none;
+  border-color: #3f51b5;
 }
 
 .popup .popup-buttons {
@@ -82,10 +105,14 @@ body.dark h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin: 20px auto;
-  max-width: 500px;
+  margin:20px auto;
+  max-width: 400px;
   flex-wrap: wrap;
+  border-radius: 100px;
+}
+
+#searchInput {
+  border-radius: 100px;
 }
 
 .top-controls input[type="text"] {
@@ -113,7 +140,11 @@ body.dark h1 {
 #themeToggle {
   font-size: 20px;
   background: none;
-  border: none;
+  background-color: white;
+  border: 1px solid #cbd5e0;
+  border-radius: 100px;
+  font-size: 15px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -205,8 +236,8 @@ a {
 }
 
 .suggestions {
-  position: absolute;
-  top: 60px;
+  position:absolute;;
+  top: 40px;
   background: white;
   border: 1px solid #ccc;
   max-height: 200px;
@@ -264,6 +295,10 @@ a {
   gap: 12px;
 }
 
+span.icon.note-icon{
+  cursor: pointer;
+}
+
 .note-buttons button {
   flex: 1;
   padding: 10px;
@@ -295,22 +330,27 @@ body.dark .note-popup textarea {
 }
 
 body.dark .topic {
-  background: #1f1f1f;
+  background: #2c2c2c;
   border-left-color: #7986cb;
 }
 
 body.dark .difficulty {
-  background: #2c2c2c;
+  background: #444;
   border-left-color: #ce93d8;
 }
 
 body.dark .problem {
-  background: #2e7d32;
+  background: #457b4561;
   color: white;
 }
 
 body.dark .problem a.icon:hover {
   color: #90caf9;
+}
+
+.suggestions div{
+  background-color:white;
+  color: black; /* default color for dark too*/
 }
 
 body.dark .popup {
@@ -327,12 +367,30 @@ body.dark .popup select {
 
 
 @media (max-width: 768px) {
-  .top-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
 
   .top-controls input[type="text"], .suggestions {
-    width: 100%;
+    width: 50%;
   }
+  .topic{
+    width:90%;
+    margin: 0 auto;
+    min-width: fit-content;
+  }
+
+  .difficulty{
+    min-width: fit-content;
+  }
+
+  .div{
+    min-width: fit-content;
+  }
+
+  .problem{
+    min-width: fit-content;
+  }
+
+  .suggestions{
+    min-width: fit-content;
+  }
+
 }

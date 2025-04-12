@@ -241,8 +241,11 @@ function updateSearchSuggestions() {
   if (!input) return suggestions.classList.add("hidden");
 
   const matches = Array.from(document.querySelectorAll(".problem"))
-    .filter((p) => p.innerText.toLowerCase().includes(input))
-    .map((p) => ({ text: p.innerText, el: p }));
+    .map((p) => {
+      const nameSpan = p.querySelector("span:nth-child(2)");
+      return { text: nameSpan.textContent, el: p };
+    })
+    .filter(({ text }) => text.toLowerCase().includes(input));
 
   matches.forEach(({ text, el }) => {
     const div = document.createElement("div");
@@ -276,5 +279,6 @@ function updateSearchSuggestions() {
 
   suggestions.classList.remove("hidden");
 }
+
 
 window.onload = fetchAndRenderProblems;
