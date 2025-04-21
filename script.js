@@ -115,6 +115,7 @@ function fetchAndRenderProblems() {
 function renderProblems(data) {
   const container = document.getElementById("topicsContainer");
   container.innerHTML = "";
+  let problemCount=1;
 
   const topicsMap = {};
 
@@ -164,17 +165,18 @@ function renderProblems(data) {
 
       diffHeader.onclick = () => toggleCollapse(diffContent, diffIcon);
 
-      problems.forEach((p, i) => {
+      problems.forEach((p) => {
         const problem = document.createElement("div");
         problem.className = "problem";
         problem.innerHTML = `
-          <span>#${i + 1}</span>
+          <span style="font-weight: bold;">${problemCount}</span>
           <span>${p.name}</span>
-          <a href="${p.yt}" target="_blank" class="icon" title="YouTube">🎥</a>
-          <a href="${p.pr}" target="_blank" class="icon" title="Practice">💻</a>
+          <a href="${p.yt}" target="_blank" class="icon ${!p.yt?'disabled':''}" title="YouTube">${p.yt?'▶️':'🚫'}</a>
+          <a href="${p.pr}" target="_blank" class="icon ${!p.pr?'disabled':''}" title="Practice">${p.pr?'💻':'🚫'}</a>
           <span class="icon note-icon" data-note="${p.notes || ""}" title="Click to view/edit note">📝</span>
         `;
         diffContent.appendChild(problem);
+        problemCount++;
       });
 
       diffDiv.appendChild(diffHeader);

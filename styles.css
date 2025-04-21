@@ -42,6 +42,11 @@ body.dark h1 {
   overflow: hidden; /* Don't scroll the outer popup */
 }
 
+body.dark .popup {
+  background: #2c2c2c;
+  color: white;
+}
+
 .popup-content {
   flex: 1;
   overflow-y: auto;
@@ -66,6 +71,12 @@ body.dark h1 {
   box-sizing: border-box;
 }
 
+body.dark .popup input,
+body.dark .popup select {
+  background: #444;
+  color: white;
+  border: 1px solid #666;
+}
 
 .popup input:focus,
 .popup select:focus {
@@ -99,7 +110,6 @@ body.dark h1 {
   background-color: #e53935;
   color: white;
 }
-
 
 .top-controls {
   display: flex;
@@ -186,6 +196,11 @@ input, select {
   /*border-left: 6px solid #3f51b5;*/
 }
 
+body.dark .topic {
+  background: #2c2c2c;
+  border-left-color: #7986cb;
+}
+
 .difficulty {
   background: #f8f8f8;
   padding: 15px;
@@ -194,26 +209,46 @@ input, select {
   /* border-left: 4px solid #9c27b0; */
 }
 
+body.dark .difficulty {
+  background: #444;
+  border-left-color: #ce93d8;
+}
+
 .problem {
-  background: #e8f5e9;
+  background: #ffffff;
   padding: 10px 15px;
   border-radius: 8px;
   margin: 8px 0;
   display: grid;
-  grid-template-columns: 50px 1fr 40px 40px 40px;
+  grid-template-columns: 50px 1fr 25px 25px 25px;
   align-items: center;
   gap: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   font-size: 0.95rem;
 }
 
+body.dark .problem {
+  background: #5a5c5b;
+  color: rgb(255, 255, 255);
+}
+
 .problem a.icon {
-  color: #444;
-  transition: color 0.2s;
+  text-align:center;
+  border-radius: 50%;
 }
 
 .problem a.icon:hover {
-  color: #3f51b5;
+  transform: translateY(-3px);
+}
+
+span.icon.note-icon{
+  text-align: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+span.icon.note-icon:hover {
+  transform: translateY(-3px);
 }
 
 a {
@@ -235,6 +270,11 @@ a {
   font-size: 1.1rem;
 }
 
+.icon.disabled {
+  pointer-events: none;
+}
+
+
 .suggestions {
   position:absolute;;
   top: 40px;
@@ -247,9 +287,11 @@ a {
   border-radius: 6px;
 }
 
-.suggestions div {
+.suggestions div{
+  background-color:white;
   padding: 8px;
   cursor: pointer;
+  color: black; /* default color for dark too*/
 }
 
 .suggestions div:hover {
@@ -276,6 +318,11 @@ a {
   overflow: hidden;
 }
 
+body.dark .note-popup {
+  background: #2c2c2c;
+  color: white;
+}
+
 .note-popup textarea {
   flex: 1;
   padding: 12px;
@@ -289,14 +336,16 @@ a {
   overflow-y: auto;
 }
 
+body.dark .note-popup textarea {
+  background: #444;
+  color: white;
+  border: 1px solid #666;
+}
+
 .note-buttons {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-}
-
-span.icon.note-icon{
-  cursor: pointer;
 }
 
 .note-buttons button {
@@ -318,59 +367,12 @@ span.icon.note-icon{
   color: white;
 }
 
-body.dark .note-popup {
-  background: #2c2c2c;
-  color: white;
-}
-
-body.dark .note-popup textarea {
-  background: #444;
-  color: white;
-  border: 1px solid #666;
-}
-
-body.dark .topic {
-  background: #2c2c2c;
-  border-left-color: #7986cb;
-}
-
-body.dark .difficulty {
-  background: #444;
-  border-left-color: #ce93d8;
-}
-
-body.dark .problem {
-  background: #457b4561;
-  color: white;
-}
-
-body.dark .problem a.icon:hover {
-  color: #90caf9;
-}
-
-.suggestions div{
-  background-color:white;
-  color: black; /* default color for dark too*/
-}
-
-body.dark .popup {
-  background: #2c2c2c;
-  color: white;
-}
-
-body.dark .popup input,
-body.dark .popup select {
-  background: #444;
-  color: white;
-  border: 1px solid #666;
-}
-
-
 @media (max-width: 768px) {
 
   .top-controls input[type="text"], .suggestions {
     width: 50%;
   }
+  
   .topic{
     width:90%;
     margin: 0 auto;
