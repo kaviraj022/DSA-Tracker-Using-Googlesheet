@@ -117,11 +117,13 @@ function renderProblems(data) {
   container.innerHTML = "";
   let problemCount=1;
 
-  const topicsMap = {};
+  const topicsMap = {'Basics':{},'Array':{},'Binary Search':{},'Sorting':{},'LinkedList':{},
+  'Stack':{},'Queue':{},'Sliding Window':{},'Heap':{},'Greedy':{},'Binary Tree':{},
+  'Binary Search Tree':{},'Recurssion':{},'Dynamic Programming':{},'Graph':{},'String':{},
+  'Trie':{}};
 
   // Organizing data by topic and difficulty
   data.forEach(({ topic, difficulty, name, yt, pr, notes }) => {
-    if (!topicsMap[topic]) topicsMap[topic] = {};
     if (!topicsMap[topic][difficulty]) topicsMap[topic][difficulty] = [];
     topicsMap[topic][difficulty].push({ name, yt, pr, notes });
   });
