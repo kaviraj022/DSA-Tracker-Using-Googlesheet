@@ -237,7 +237,7 @@ document.addEventListener("click", function (e) {
       fetch(`${baseUrl}?${params.toString()}`)
         .then(res => res.text())
         .then(msg => {
-          if (msg.trim() === "Updated") {
+          if (msg.trim() === "Note Updated") {
             alert("✅ Note updated!");
             e.target.dataset.note = newNote;
             fetchAndRenderProblems();
